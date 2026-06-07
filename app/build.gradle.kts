@@ -302,6 +302,7 @@ dependencies {
     implementation(libs.google.exoplayer.datasource)
     implementation(libs.google.exoplayer.hls)
     implementation(libs.google.exoplayer.mediasession)
+    implementation(libs.google.exoplayer.okhttp)
     implementation(libs.google.exoplayer.smoothstreaming)
     implementation(libs.google.exoplayer.ui)
 

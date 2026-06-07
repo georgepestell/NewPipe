@@ -166,6 +166,14 @@
     <string name="background_player_playing_toast">Playing in background</string>
     <string name="popup_playing_toast">Playing in popup mode</string>
     <string name="content">Content</string>
+    <string name="ip_version_title">IP version</string>
+    <string name="ip_version_summary">Choose whether to use IPv4, IPv6, or let the system decide for network connections</string>
+    <string name="ip_version_system">System default</string>
+    <string name="ip_version_ipv4">IPv4 only</string>
+    <string name="ip_version_ipv6">Prefer IPv6</string>
+    <string name="ip_version_restart_note">YouTube playback applies this only after an app restart. Note: prefer-IPv6 is only best-effort for playback.</string>
+    <string name="ip_version_restart_title">Restart to apply</string>
+    <string name="restart">Restart now</string>
     <string name="show_age_restricted_content_title">Show age restricted content</string>
     <string name="show_age_restricted_content_summary">Show content possibly unsuitable for children because it has an age limit (like 18+)</string>
     <string name="youtube_restricted_mode_enabled_title">Turn on YouTube\'s \"Restricted Mode\"</string>

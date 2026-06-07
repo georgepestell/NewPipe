@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.SocketException
+import okhttp3.OkHttpClient
 import org.acra.ACRA.init
 import org.acra.ACRA.isACRASenderServiceProcess
 import org.acra.config.CoreConfigurationBuilder
@@ -74,7 +75,37 @@ open class App :
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        applyIpVersionPreference()
         initACRA()
+    }
+
+    /**
+     *
+     * Apply IPv4 / IPv6 preference to OkHttp and HttpUrlConnection stacks.
+     * - OkHttp layer is respnsible for extractor metadata, images, and non-YT streams.
+     * - [java.net.HttpURLConnection] is responsible for YouTube connections.
+     *
+     * Note: HttpURLConnection only supports overrides "Ipv4 only" or "prefer IPv6"
+     */
+    private fun applyIpVersionPreference() {
+        val mode = IpVersionMode.fromPreferences(this)
+        IpVersionDns.mode = mode
+        when (mode) {
+            IpVersionMode.IPV4 -> {
+                System.setProperty("java.net.preferIPv4Stack", "true")
+                System.setProperty("java.net.preferIPv6Addresses", "false")
+            }
+
+            IpVersionMode.IPV6 -> {
+                System.setProperty("java.net.preferIPv4Stack", "false")
+                System.setProperty("java.net.preferIPv6Addresses", "true")
+            }
+
+            IpVersionMode.SYSTEM -> {
+                System.setProperty("java.net.preferIPv4Stack", "false")
+                System.setProperty("java.net.preferIPv6Addresses", "false")
+            }
+        }
     }
 
     override fun onCreate() {
@@ -138,7 +169,7 @@ open class App :
         }.build()
 
     protected open fun getDownloader(): Downloader {
-        val downloader = DownloaderImpl.init(null)
+        val downloader = DownloaderImpl.init(OkHttpClient.Builder().dns(IpVersionDns))
         setCookiesToDownloader(downloader)
         return downloader
     }

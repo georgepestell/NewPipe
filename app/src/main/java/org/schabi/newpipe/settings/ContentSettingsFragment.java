@@ -9,15 +9,19 @@ import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.os.LocaleListCompat;
 import androidx.preference.Preference;
 
 import org.schabi.newpipe.DownloaderImpl;
+import org.schabi.newpipe.IpVersionDns;
+import org.schabi.newpipe.IpVersionMode;
 import org.schabi.newpipe.R;
 import org.schabi.newpipe.extractor.NewPipe;
 import org.schabi.newpipe.player.helper.PlayerHelper;
 import org.schabi.newpipe.util.Localization;
+import org.schabi.newpipe.util.NavigationHelper;
 import org.schabi.newpipe.util.image.ImageStrategy;
 import org.schabi.newpipe.util.image.PreferredImageQuality;
 
@@ -36,6 +40,27 @@ public class ContentSettingsFragment extends BasePreferenceFragment {
 
         setupAppLanguagePreferences();
         setupImageQualityPref();
+        setupIpVersionPref();
+    }
+
+    private void setupIpVersionPref() {
+        requirePreference(R.string.ip_version_key).setOnPreferenceChangeListener(
+            (preference, newValue) -> {
+                // Apply the new IP selection
+                IpVersionDns.INSTANCE.setMode(IpVersionMode.fromPreferenceValue(
+                        preference.getContext(), (String) newValue));
+
+                // Require a restart to force a refresh of the [java.net.HttpURLConnection]
+                // configuration which is cached on startup
+                new AlertDialog.Builder(requireContext())
+                        .setTitle(R.string.ip_version_restart_title)
+                        .setMessage(R.string.ip_version_restart_note)
+                        .setPositiveButton(R.string.restart, (dialog, which) ->
+                                NavigationHelper.restartApp(requireActivity()))
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+                return true;
+            });
     }
 
     private void setupAppLanguagePreferences() {

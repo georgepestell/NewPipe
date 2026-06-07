@@ -40,6 +40,17 @@
         app:iconSpaceReserved="false"
         app:useSimpleSummaryProvider="true" />
 
+    <ListPreference
+        android:defaultValue="@string/ip_version_default_value"
+        android:entries="@array/ip_version_description_list"
+        android:entryValues="@array/ip_version_value_list"
+        android:key="@string/ip_version_key"
+        android:title="@string/ip_version_title"
+        android:summary="@string/ip_version_summary"
+        app:singleLineTitle="false"
+        app:iconSpaceReserved="false"
+        app:useSimpleSummaryProvider="true" />
+
     <PreferenceScreen
         android:fragment="org.schabi.newpipe.settings.tabs.ChooseTabsFragment"
         android:key="@string/main_page_content_key"

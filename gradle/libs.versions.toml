@@ -126,6 +126,7 @@ google-exoplayer-database = { module = "com.google.android.exoplayer:exoplayer-d
 google-exoplayer-datasource = { module = "com.google.android.exoplayer:exoplayer-datasource", version.ref = "exoplayer" }
 google-exoplayer-hls = { module = "com.google.android.exoplayer:exoplayer-hls", version.ref = "exoplayer" }
 google-exoplayer-mediasession = { module = "com.google.android.exoplayer:extension-mediasession", version.ref = "exoplayer" }
+google-exoplayer-okhttp = { module = "com.google.android.exoplayer:extension-okhttp", version.ref = "exoplayer" }
 google-exoplayer-smoothstreaming = { module = "com.google.android.exoplayer:exoplayer-smoothstreaming", version.ref = "exoplayer" }
 google-exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayer" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
